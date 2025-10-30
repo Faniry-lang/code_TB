@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Détail Client - Banque</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Détail du Client</h1>
+        <div>
+            <a th:href="@{/clients/{id}/modifier(id=${client.id})}" class="btn btn-warning btn-sm">
+                <i class="fas fa-edit"></i> Modifier
+            </a>
+            <a th:href="@{/clients}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Informations du client -->
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Informations Personnelles</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Matricule:</div>
+                        <div class="col-sm-8" th:text="${client.matricule}">C12345</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Nom:</div>
+                        <div class="col-sm-8" th:text="${client.nom}">Dupont</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Prénom:</div>
+                        <div class="col-sm-8" th:text="${client.prenom}">Jean</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Date de naissance:</div>
+                        <div class="col-sm-8" th:text="${client.dateNaissance}">01/01/1980</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Adresse:</div>
+                        <div class="col-sm-8" th:text="${client.adresse}">1 rue de Paris</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Email:</div>
+                        <div class="col-sm-8" th:text="${client.email}">jean.dupont@email.com</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Téléphone:</div>
+                        <div class="col-sm-8" th:text="${client.telephone}">0601020304</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Date création:</div>
+                        <div class="col-sm-8" th:text="${client.dateCreation}">27/09/2025 10:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soldes et actions -->
+        <div class="col-lg-6">
+            <!-- Solde avec intérêt -->
+            <div class="card border-left-success shadow mb-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Solde avec Intérêt</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                 th:text="${soldeAvecInteret}">
+                                1500.75 €
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solde total -->
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Solde Total</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                 th:text="${soldeTotal}">
+                                2500.00 €
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions rapides -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Actions Rapides</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/comptes-courants/client/{idClient}(idClient=${client.id})}"
+                           class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-wallet"></i>
+                                </span>
+                            <span class="text">Compte Courant</span>
+                        </a>
+                        <a th:href="@{/comptes-depot/client/{idClient}(idClient=${client.id})}"
+                           class="btn btn-info btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-piggy-bank"></i>
+                                </span>
+                            <span class="text">Compte Dépôt</span>
+                        </a>
+                        <a th:href="@{/prets/client/{idClient}(idClient=${client.id})}"
+                           class="btn btn-warning btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </span>
+                            <span class="text">Prêts</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}">Erreur</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+</body>
+</html>

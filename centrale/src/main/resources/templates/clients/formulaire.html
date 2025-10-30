@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin-layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${client != null and client['id'] != null}">Modifier Client - Banque</title>
+    <title th:unless="${client != null and client['id'] != null}">Nouveau Client - Banque</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" th:if="${client != null and client['id'] != null}">Modifier le Client</h1>
+        <h1 class="h3 mb-0 text-gray-800" th:unless="${client != null and client['id'] != null}">Nouveau Client</h1>
+        <a th:href="@{/clients}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+
+    <!-- Formulaire pour la création (nouveau client) -->
+    <div th:if="${client == null or client['id'] == null}">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Renseignez les informations du nouveau client</h6>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/clients}" method="post" id="clientForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="matricule" class="form-label">Matricule *</label>
+                                <input type="text" class="form-control" id="matricule" name="matricule"
+                                       required maxlength="20">
+                                <div class="form-text">Exemple: C12345</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nom" class="form-label">Nom *</label>
+                                <input type="text" class="form-control" id="nom" name="nom"
+                                       required maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="prenom" class="form-label">Prénom *</label>
+                                <input type="text" class="form-control" id="prenom" name="prenom"
+                                       required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dateNaissance" class="form-label">Date de naissance *</label>
+                                <input type="date" class="form-control" id="dateNaissance" name="dateNaissance"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse *</label>
+                        <textarea class="form-control" id="adresse" name="adresse"
+                                  rows="3" required maxlength="200"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       required maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="telephone" class="form-label">Téléphone *</label>
+                                <input type="tel" class="form-control" id="telephone" name="telephone"
+                                       required maxlength="15">
+                                <div class="form-text">Exemple: 0601020304</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/clients}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Annuler
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Créer le client
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulaire pour la modification (client existant) -->
+    <div th:if="${client != null and client['id'] != null}">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Modifier les informations du client
+                    <span th:text="'(' + ${client['matricule']} + ')'"></span>
+                </h6>
+                <span class="badge bg-info">ID: <span th:text="${client['id']}"></span></span>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/clients/{id}(id=${client['id']})}" method="post" id="clientForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="matricule" class="form-label">Matricule *</label>
+                                <input type="text" class="form-control" id="matricule" name="matricule"
+                                       th:value="${client['matricule']}" required maxlength="20">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nom" class="form-label">Nom *</label>
+                                <input type="text" class="form-control" id="nom" name="nom"
+                                       th:value="${client['nom']}" required maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="prenom" class="form-label">Prénom *</label>
+                                <input type="text" class="form-control" id="prenom" name="prenom"
+                                       th:value="${client['prenom']}" required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="dateNaissance" class="form-label">Date de naissance *</label>
+                                <input type="date" class="form-control" id="dateNaissance" name="dateNaissance"
+                                       th:value="${client['dateNaissance']}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse *</label>
+                        <textarea class="form-control" id="adresse" name="adresse"
+                                  rows="3" required maxlength="200" th:text="${client['adresse']}"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       th:value="${client['email']}" required maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="telephone" class="form-label">Téléphone *</label>
+                                <input type="tel" class="form-control" id="telephone" name="telephone"
+                                       th:value="${client['telephone']}" required maxlength="15">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/clients}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Annuler
+                        </a>
+                        <div>
+                            <a th:href="@{/clients/{id}(id=${client['id']})}" class="btn btn-info me-2">
+                                <i class="fas fa-eye"></i> Voir le détail
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Modifier le client
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Section de suppression -->
+        <div class="card shadow border-danger">
+            <div class="card-header py-3 bg-danger text-white">
+                <h6 class="m-0 font-weight-bold">Zone dangereuse</h6>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Cette action est irréversible. Toutes les données du client seront supprimées.</p>
+                <form th:action="@{/clients/{id}/supprimer(id=${client['id']})}" method="post" id="deleteForm">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Supprimer le client
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <span th:text="${error}">Erreur</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Message de succès -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${success}">Succès</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Configuration JavaScript pour les messages -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.clientFormConfig = {
+            messages: {
+                requiredFields: 'Veuillez remplir tous les champs obligatoires.',
+                deleteConfirm: 'Êtes-vous sûr de vouloir supprimer définitivement ce client ?'
+            },
+            isEditMode: /*[[${client != null and client['id'] != null}]]*/ false
+        };
+        /*]]>*/
+    </script>
+</div>
+
+
+</body>
+</html>

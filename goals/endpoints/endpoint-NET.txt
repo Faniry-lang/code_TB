@@ -1,0 +1,119 @@
+
+http://localhost:5000/
+
+==============================
+PretsController (.NET)
+==============================
+
+
+1. GET /api/prets/{id}
+	 - Récupère un prêt par son identifiant
+	 - Arguments : id (path)
+	 - Output JSON (PretDto) :
+		 {
+			 "id": int,
+			 "idClient": int,
+			 "montantPret": decimal,
+			 "periodiciteRemboursement": int,
+			 "tauxInteretAnnuel": decimal,
+			 "dateCreation": string (ISO 8601),
+			 "dateFermeture": string (ISO 8601) | null,
+			 "client": ClientDto | null,
+			 "remboursements": [RemboursementPretDto, ...] | null
+		 }
+
+2. GET /api/prets/client/{idClient}
+	 - Récupère la liste des prêts d’un client
+	 - Arguments : idClient (path)
+	 - Output JSON :
+		 [ PretDto, ... ]
+
+3. POST /api/prets
+	 - Crée un nouveau prêt
+	 - Input JSON (CreatePretDto) :
+		 {
+			 "idClient": int,
+			 "montantPret": decimal,
+			 "periodiciteRemboursement": int,
+			 "tauxInteretAnnuel": decimal
+		 }
+	 - Output JSON (PretDto créé) :
+		 (voir structure PretDto ci-dessus)
+
+4. PUT /api/prets/{id}
+	 - Met à jour un prêt existant
+	 - Arguments : id (path)
+	 - Input JSON (UpdatePretDto) :
+		 {
+			 "montantPret"?: decimal,
+			 "periodiciteRemboursement"?: int,
+			 "tauxInteretAnnuel"?: decimal,
+			 "dateFermeture"?: string (ISO 8601)
+		 }
+	 - Output : HTTP 204 No Content (pas de body)
+
+5. DELETE /api/prets/{id}
+	 - Supprime un prêt (si aucun remboursement associé)
+	 - Arguments : id (path)
+	 - Output : HTTP 204 No Content (pas de body)
+
+6. GET /api/prets/{id}/remboursements
+	 - Liste les remboursements d’un prêt
+	 - Arguments : id (path)
+	 - Output JSON : [ RemboursementPretDto, ... ]
+
+7. POST /api/prets/{id}/remboursements
+	 - Enregistre un remboursement de prêt
+	 - Arguments : id (path)
+	 - Input JSON (CreateRemboursementDto) :
+		 {
+			 "idPret": int,
+			 "montantRembourse": decimal,
+			 "interetPaye": decimal,
+			 "datePaiement": string (ISO 8601),
+			 "description"?: string
+		 }
+	 - Output JSON (RemboursementPretDto créé) :
+		 {
+			 "id": int,
+			 "montantRembourse": decimal,
+			 "interetPaye": decimal,
+			 "datePaiement": string (ISO 8601),
+			 "idPret": int,
+			 "idMouvementCompteCourant": int,
+			 "mouvementCompteCourant": MouvementCompteCourantDto | null
+		 }
+
+Structures des DTOs utilisés :
+
+ClientDto :
+{
+	"id": int,
+	"matricule": string,
+	"nom": string,
+	"prenom": string,
+	"dateNaissance": string (YYYY-MM-DD),
+	"email": string,
+	"telephone": string
+}
+
+MouvementCompteCourantDto :
+{
+	"id": int,
+	"montant": decimal,
+	"description": string,
+	"dateMouvement": string (ISO 8601),
+	"idTypeMouvement": int,
+	"idCompteCourant": int
+}
+
+RemboursementPretDto :
+{
+	"id": int,
+	"montantRembourse": decimal,
+	"interetPaye": decimal,
+	"datePaiement": string (ISO 8601),
+	"idPret": int,
+	"idMouvementCompteCourant": int,
+	"mouvementCompteCourant": MouvementCompteCourantDto | null
+}

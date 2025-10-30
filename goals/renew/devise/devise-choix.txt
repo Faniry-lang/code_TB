@@ -1,0 +1,13 @@
+Dans CompteDepotController et CompteCourantController, je souhaite ajouter une nouvelle fonctionnalité.
+Lorsque l'on souhaite créditer ou débiter, on peut choisir la devise à laquelle on veut faire l'action avec l'entité Devise :
+    par conséquent, l'argent insérer en devise est multiplié par sa valeur en ariary
+Apporte les modification nécessaire sur les controller et leur page.
+
+CompteDepotController => depot.html
+CompteCourantController => courant.html
+
+Tout cela à l'aide du EJB remote : DeviseRemote 
+Je t'ai aussi donnée mon gestionnaire d'EJB EJBConfig et l'entité EJB :
+    - l'attribut valeur de Devise correspond à la valeur en ariary.
+    - l'argent insérer en devise (si inséré en devise) est multiplié par sa valeur en ariary
+    - l'affichage des informations reste toujours en ariary

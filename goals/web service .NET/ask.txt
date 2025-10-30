@@ -1,0 +1,5 @@
+Je souhaite créer un web service REST pour les prêts en environnement .NET avec ASP.NET avec une base Postgres.
+Mon IDE est JetBrain Rider.
+Ce web service va utiliser ma base de donnée déjà mise en place (donc pas de update ni de create-drop).
+Je t'ai donnée en pièce jointe la conception de ma base de donnée.
+Comment faire cela étape par étape cela?

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Prêts - Banque</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Prêts - <span th:text="${client.nom + ' ' + client.prenom}">Client</span></h1>
+        <a th:href="@{/clients/{id}(id=${client.id})}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Retour au client
+        </a>
+        <!-- Ajouter ce bouton à côté du bouton "Retour au client" -->
+        <a th:href="@{/prets/client/{id}/nouveau(id=${client.id})}" class="btn btn-primary btn-sm ml-2">
+            <i class="fas fa-plus"></i> Nouveau prêt
+        </a>
+    </div>
+
+    <!-- Somme totale des prêts -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-left-warning shadow mb-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Somme Totale des Prêts</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                 th:text="${prets != null ? #numbers.formatDecimal(prets.solde, 1, 2) + ' €' : 'N/A'}">
+                                5000.00 €
+                            </div>
+                            <div class="text-xs text-muted mt-1" th:if="${prets != null}">
+                                <span th:text="${prets.message}">Opération réussie</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Informations sur les prêts</h6>
+        </div>
+        <div class="card-body">
+            <p>Cette section affiche la somme totale des prêts accordés au client.</p>
+            <p>Pour une gestion détaillée des prêts (création, modification, remboursement),
+                veuillez utiliser le système de gestion des prêts dédié.</p>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <strong>Note :</strong> Les fonctionnalités avancées de gestion des prêts
+                seront disponibles dans une future version.
+            </div>
+        </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}">Erreur</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "wfXIHQwL22V4dPbECQoQrWxGWBN2DHPf1RlEuxqVPv8=",
+  "Source": "banque-compte-pret",
+  "BasePath": "_content/banque-compte-pret",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

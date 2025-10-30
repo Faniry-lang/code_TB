@@ -1,0 +1,6 @@
+A présent, crée moi cette logique métier PretService et les fonctions que je vais te donner ci-dessous à partir des fichier en pièce jointes : 
+PretService
+    - (5) Calculer somme prêts à l'instant T
+        - Arguments :
+            - idClient
+J'utiliserai cette fonction de ce service dans ClientService pour calculer la somme des prêts

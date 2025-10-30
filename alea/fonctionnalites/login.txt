@@ -1,0 +1,5 @@
+Dans UtilisateurService, crée moi le service contenant une fonction permettant le login d'un utilisateur.
+Ensuite, dans le même service, enregistre en session EJB (pour Statefull) le Utilisateur connecté ainsi que tous les Directions et ActionRole en utilisant leur findAll.
+
+Dans UtilisateurController, crée moi un le rest controller (endpoints controller) permettant le login et le logout en utilisant UtilisateurService comme
+ClientController.

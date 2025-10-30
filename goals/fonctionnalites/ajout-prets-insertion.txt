@@ -1,0 +1,35 @@
+Dans PretController, ajoute un endpoint permettant de créer un prêt pour un client. Je t'ai mis à disposition les fichiers relatifs à cela.
+Voici le endpoint du web service utilisé :
+POST /prets
+Arguments : PretRequest (body)
+Fonction : Crée un nouveau prêt pour un client
+Retourne : PretResponse ou ErrorResponse
+Schéma JSON d'entrée (PretRequest) :
+{
+	"idClient": 1,
+	"montantPret": 10000.00,
+	"tauxInteretAnnuel": 5.5,
+	"periodiciteRemboursement": 12,
+	"dateCreation": "2025-09-27T11:00:00Z"
+}
+
+Schéma JSON de sortie (succès) (PretResponse) :
+{
+	"idPret": 1,
+	"montantPret": 10000.00,
+	"tauxInteretAnnuel": 5.5,
+	"periodiciteRemboursement": 12,
+	"dateCreation": "2025-09-27T11:00:00Z",
+	"dateFermeture": null
+}
+
+Schéma JSON (erreur) :
+{
+	"error": "Erreur lors de la création du prêt",
+	"success": false
+}
+
+Ajoute le nouvel endpoint de PretController :
+    @POST
+    public Response createPret(PretRequest request)
+dans endpoints-JAVA.txt avec les informations complète en input (avec PretRequest) et en output (avec PretResponse)

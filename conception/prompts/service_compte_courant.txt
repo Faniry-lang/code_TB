@@ -1,0 +1,140 @@
+Dans mon projet de web service de banque, crée moi cette logique métier CompteCourantService et les fonctions que je vais te donner ci-dessous à partir des fichier en pièce jointes : 
+- CompteCourantService
+    - (1) Calculer solde brute compte courant (à l'instant T)
+        - Arguments :
+            - idClient
+    - (6) Créditer compte courant
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_courant
+        - updater la solde du compte courant après chaque mouvement
+    - (9) Débiter compte courant
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_courant
+        - Conditions : 
+            - Solde suffisante du compte courant pour pouvoir le faire
+        - updater la solde du compte courant après chaque mouvement
+
+J'utilise EJB avec Jakarta EE et une base Postgres.
+
+Voici la structure de mon projet :
+D:.
+│   .gitignore
+│   mvnw
+│   mvnw.cmd
+│   pom.xml
+│   
+├───.idea
+│   │   .gitignore
+│   │   compiler.xml
+│   │   dataSources.local.xml
+│   │   dataSources.xml
+│   │   encodings.xml
+│   │   jarRepositories.xml
+│   │   jpa.xml
+│   │   misc.xml
+│   │   vcs.xml
+│   │   workspace.xml
+│   │   
+│   └───dataSources
+│       │   d9373c43-1445-4d93-b8d9-3a6756ce2081.xml
+│       │   
+│       └───d9373c43-1445-4d93-b8d9-3a6756ce2081
+│           └───storage_v2
+│               └───_src_
+│                   └───database
+│                       │   banque_berthin.u6ztgQ.meta
+│                       │
+│                       └───banque_berthin.u6ztgQ
+│                           └───schema
+│                                   information_schema.FNRwLQ.meta
+│                                   pg_catalog.0S1ZNQ.meta
+│                                   public.abK9xQ.meta
+│
+├───.mvn
+│   └───wrapper
+│           maven-wrapper.jar
+│           maven-wrapper.properties
+│
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───management
+    │   │           └───comptemanagement
+    │   │               │   HelloApplication.java
+    │   │               │   HelloResource.java
+    │   │               │
+    │   │               ├───config
+    │   │               │       RestApplication.java
+    │   │               │
+    │   │               ├───entity
+    │   │               │       Client.java
+    │   │               │       CompteCourant.java
+    │   │               │       CompteDepot.java
+    │   │               │       ConfigurationCompteDepot.java
+    │   │               │       HistoriqueStatutPret.java
+    │   │               │       MouvementCompteCourant.java
+    │   │               │       MouvementCompteDepot.java
+    │   │               │       Pret.java
+    │   │               │       RemboursementPret.java
+    │   │               │       StatutCompte.java
+    │   │               │       StatutPret.java
+    │   │               │       TypeMouvementCompteCourant.java
+    │   │               │       TypeMouvementCompteDepot.java
+    │   │               │
+    │   │               ├───persistance
+    │   │               │   ├───implementation
+    │   │               │   │       ClientRepositoryImp.java
+    │   │               │   │       CompteCourantRepositoryImp.java
+    │   │               │   │       ConfigurationCompteDepotRepositoryImp.java
+    │   │               │   │       HistoriqueStatutPretRepositoryImp.java
+    │   │               │   │       MouvementCompteCourantRepositoryImp.java
+    │   │               │   │       MouvementCompteDepotRepositoryImp.java
+    │   │               │   │       PretRepositoryImp.java
+    │   │               │   │       RemboursementPretRepositoryImp.java
+    │   │               │   │       StatutCompteRepositoryImp.java
+    │   │               │   │       StatutPretRepositoryImp.java
+    │   │               │   │       TypeMouvementCompteCourantRepositoryImp.java
+    │   │               │   │       TypeMouvementCompteDepotRepositoryImp.java
+    │   │               │   │
+    │   │               │   └───repository
+    │   │               │           ClientRepository.java
+    │   │               │           CompteCourantRepository.java
+    │   │               │           ConfigurationCompteDepotRepository.java
+    │   │               │           HistoriqueStatutPretRepository.java
+    │   │               │           MouvementCompteCourantRepository.java
+    │   │               │           MouvementCompteDepotRepository.java
+    │   │               │           PretRepository.java
+    │   │               │           RemboursementPretRepository.java
+    │   │               │           StatutCompteRepository.java
+    │   │               │           StatutPretRepository.java
+    │   │               │           TypeMouvementCompteCourantRepository.java
+    │   │               │           TypeMouvementCompteDepotRepository.java
+    │   │               │
+    │   │               ├───rest
+    │   │               └───service
+    │   └───resources
+    │       └───META-INF
+    │               beans.xml
+    │               persistence.xml
+    │
+    └───test
+        ├───java
+        │   └───com
+        │       └───management
+        │           └───comptemanagement
+        │               └───persistance
+        │                   └───implementation
+        │                           ClientService.java
+        │
+        └───resources
+
+Je t'ai aussi donné en pièce jointes le script des tables de ma base de données ainsi que le modèle conceptuel de données de ma conception.

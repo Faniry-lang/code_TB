@@ -1,0 +1,6 @@
+@banque_compte_pret_HostAddress = http://localhost:5199
+
+GET {{banque_compte_pret_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

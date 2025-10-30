@@ -1,0 +1,7 @@
+J'ai ajouter de nouveau endpoint : 
+    - getHistoriqueMouvements dans CompteCourantController
+        - avec MouvementResponse comme réponse DTO
+    - getHistoriqueMouvements dans CompteDepotController
+        - avec HistoriqueMouvementsDepotResponse comme réponse DTO
+
+Ajoute ces endpoints dans endpoints-JAVA.txt avec les informations détaillées comme d'habitude en input et output

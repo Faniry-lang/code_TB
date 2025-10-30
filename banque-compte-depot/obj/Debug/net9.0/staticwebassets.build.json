@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "M4rka1vSG40rquUK1eGGmK38nNjHTBVIm8tPM2amDo0=",
+  "Source": "banque-compte-depot",
+  "BasePath": "_content/banque-compte-depot",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

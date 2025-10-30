@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  wildfly:
+    build: .
+    container_name: wildfly-ejb
+    ports:
+      - "8100:8080"    # Port applicatif par défaut
+      - "9990:9990"    # Port management
+    volumes:
+      - ./banque-devise.war:/opt/jboss/wildfly/standalone/deployments/banque-devise.war
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    restart: unless-stopped

@@ -1,0 +1,90 @@
+Pages front à créer pour l'application de gestion de banque
+==========================================================
+
+1. Dashboard (Accueil)
+	- Statistiques principales : nombre total de clients, solde total, intérêts totaux, somme totale des prêts
+	- Liste des clients récents
+	- Graphiques et widgets pour la répartition des soldes et des prêts
+	- Endpoints utilisés : GET /clients, GET /clients/{idClient}/solde-totale, GET /comptes-courants/client/{idClient}/solde-brut, GET /comptes-depot/client/{idClient}/solde-brut, GET /comptes-depot/client/{idClient}/interets, GET /prets/client/{idClient}/somme
+
+2. Liste des clients
+	- Tableau de tous les clients
+	- Recherche par nom, prénom, email
+	- Accès rapide à la fiche client
+	- Endpoints utilisés : GET /clients, GET /clients/search
+
+3. Détail d’un client
+	- Affichage des informations complètes d’un client
+	- Solde avec intérêt et solde total
+	- Actions : modifier, supprimer
+	- Endpoints utilisés : GET /clients/{id}, GET /clients/{idClient}/solde-avec-interet, GET /clients/{idClient}/solde-totale, PUT /clients/{id}, DELETE /clients/{id}
+
+4. Création d’un client
+	- Formulaire pour ajouter un nouveau client
+	- Endpoint utilisé : POST /clients
+
+5. Modification d’un client
+	- Formulaire pour éditer les informations d’un client
+	- Endpoint utilisé : PUT /clients/{id}
+
+6. Gestion des comptes courants
+	- Affichage du solde brut
+	- Formulaires pour créditer ou débiter
+	- Endpoints utilisés : GET /comptes-courants/client/{idClient}/solde-brut, POST /comptes-courants/client/{idClient}/crediter, POST /comptes-courants/client/{idClient}/debiter
+
+7. Gestion des comptes dépôt
+	- Affichage du solde brut, solde réel, intérêts gagnés
+	- Formulaires pour créditer ou débiter
+	- Endpoints utilisés : GET /comptes-depot/client/{idClient}/solde-brut, GET /comptes-depot/client/{idClient}/solde-reel, GET /comptes-depot/client/{idClient}/interets, POST /comptes-depot/client/{idClient}/crediter, POST /comptes-depot/client/{idClient}/debiter
+
+8. Gestion des prêts
+	- Affichage de la somme totale des prêts d’un client
+	- Endpoint utilisé : GET /prets/client/{idClient}/somme
+
+Chaque page peut inclure :
+- Tableaux ou cartes pour l’affichage des données
+- Formulaires pour les actions (création, modification, crédit/débit)
+- Graphiques pour la visualisation des statistiques
+
+
+
+
+
+==============================
+Dashboard (Accueil)
+==============================
+
+Page d'accueil regroupant les statistiques principales de la banque, en lien avec les endpoints :
+
+- Nombre total de clients
+	- Endpoint utilisé : GET /clients
+	- Utilisation : Afficher le champ "count" de la réponse pour le nombre de clients.
+
+- Liste des clients récents
+	- Endpoint utilisé : GET /clients
+	- Utilisation : Afficher les derniers clients créés (triés par dateCreation).
+
+- Solde total de tous les clients
+	- Endpoint utilisé : GET /clients/{idClient}/solde-totale (pour chaque client)
+	- Utilisation : Additionner les champs "solde" de chaque réponse pour obtenir le total général.
+
+- Solde total des comptes courants
+	- Endpoint utilisé : GET /comptes-courants/client/{idClient}/solde-brut (pour chaque client)
+	- Utilisation : Additionner les "solde" pour tous les clients.
+
+- Solde total des comptes dépôt
+	- Endpoint utilisé : GET /comptes-depot/client/{idClient}/solde-brut (pour chaque client)
+	- Utilisation : Additionner les "solde" pour tous les clients.
+
+- Intérêts totaux gagnés sur les comptes dépôt
+	- Endpoint utilisé : GET /comptes-depot/client/{idClient}/interets (pour chaque client)
+	- Utilisation : Additionner les "solde" pour tous les clients.
+
+- Somme totale des prêts
+	- Endpoint utilisé : GET /prets/client/{idClient}/somme (pour chaque client)
+	- Utilisation : Additionner les "solde" pour tous les clients.
+
+Présentation possible sur la page :
+- Cartes ou widgets pour chaque statistique
+- Graphiques (barres, camembert) pour la répartition des soldes et des prêts
+- Liste des clients récents avec accès rapide à leur fiche

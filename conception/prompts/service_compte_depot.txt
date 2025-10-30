@@ -1,0 +1,83 @@
+A présent, crée moi cette logique métier CompteDepotService et les fonctions que je vais te donner ci-dessous à partir des fichier en pièce jointes : 
+- CompteDepotService
+    - (2) Calculer solde brute compte dépôt (à l'instant T)
+        - Arguments :
+            - idClient
+    - (3) Calculer intérêt gagné au sein du compte dépôt (jusqu'à l'instant T)
+        - Utiliser l'intérêt annuelle dans la dernière configuration_compte_depot
+            - celle dans la date_application est la plus récente
+        - Arguments :
+            - idClient
+    - (10) Calculer solde réelle en compte dépôt (à l'instant T)
+        - solde AVEC INTERET compte dépôt (à l'instant T)
+        - somme de :
+            - (2) solde brute compte dépôt (à l'instant T) 
+            - (3) intérêt jusqu'à l'instant T
+        - Arguments :
+            - idClient
+    - (11) Créditer compte dépôt
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_dépôt
+    - (12) Débiter compte dépôt
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_dépôt
+        - Conditions : 
+            - respecter le nombre maximal de retrait par mois
+            - respecter le pourcentage max de retrait par rapport à la :
+                - (10) solde réelle en compte dépôt (à l'instant T)
+            - Utiliser l'intérêt annuelle dans la dernière configuration_compte_depot
+                - celle dans la date_application est la plus récente
+
+
+La méthode de calcul des intérêts gagnés au sein du compte dépôt jusqu'à l'instant T et celles qui l'utilise est erronée.
+Pourquoi :
+    Méthode proposée (INCORRECTE)
+    Formule proposée par ton code
+        Intérêts = Solde brut × Taux × Nb jours total / 365
+    Problèmes majeurs
+    1. Surévaluation des intérêts
+    Cette méthode calcule les intérêts comme si tout l'argent retiré était resté sur le compte pendant toute la durée.
+    2. Absence de temporalité
+    Elle ne tient pas compte des dates de retrait, ce qui fausse complètement le calcul.
+    3. Injustice financière
+    Le client recevrait des intérêts sur de l'argent qu'il n'avait plus sur son compte.
+    Démonstration avec un exemple concret
+        Données
+            Ouverture : 1er janvier 2024 avec 10 000 €
+            Retrait : 9 000 € le 2 janvier 2024 (90% du solde)
+            Date de calcul : 31 décembre 2024 (365 jours)
+            Taux annuel : 3%
+
+        Calcul avec la méthode INCORRECTE proposée
+            Solde brut = 10 000 € - 9 000 € = 1 000 €
+            Intérêts = 1 000 € × 3% × 365 jours / 365 = 30 €
+        
+        Calcul avec la méthode CORRECTE (prorata temporis)
+            Période 1 (1er jan) : 10 000 € × 3% × 1 jour / 365 = 0,82 €
+            Période 2 (2 jan au 31 déc) : 1 000 € × 3% × 364 jours / 365 = 29,92 €
+            Total intérêts corrects = 0,82 € + 29,92 € = 30,74 €
+        Dans ce cas, la différence est minime car le retrait a eu lieu très tôt.
+        
+        Exemple plus parlant
+            Données
+                Ouverture : 1er janvier 2024 avec 10 000 €
+                Retrait : 5 000 € le 1er juillet 2024 (50% du solde)
+                Date de calcul : 31 décembre 2024 (365 jours)
+                Taux annuel : 3%
+
+            Calcul INCORRECT (méthode proposée)
+                Solde brut = 10 000 € - 5 000 € = 5 000 €
+                Intérêts = 5 000 € × 3% × 365 jours / 365 = 150 €
+            
+            Calcul CORRECT (prorata temporis)
+                Période 1 (1er jan au 30 juin) : 10 000 € × 3% × 181 jours / 365 = 148,77 €
+                Période 2 (1er juillet au 31 déc) : 5 000 € × 3% × 184 jours / 365 = 75,62 €
+                Total intérêts corrects = 148,77 € + 75,62 € = 224,39 €

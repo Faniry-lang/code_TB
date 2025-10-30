@@ -1,0 +1,105 @@
+
+
+- CompteCourantService
+    - (1) Calculer solde brute compte courant (à l'instant T)
+        - Arguments :
+            - idClient
+    - (6) Créditer compte courant
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_courant
+        - updater la solde du compte courant après chaque mouvement
+    - (9) Débiter compte courant
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_courant
+        - Conditions : 
+            - Solde suffisante du compte courant pour pouvoir le faire
+        - updater la solde du compte courant après chaque mouvement
+    - (14) Historique des mouvements du compte courant
+        - Arguments :
+            - idClient
+        
+
+- CompteDepotService
+    - (2) Calculer solde brute compte dépôt (à l'instant T)
+        - Arguments :
+            - idClient
+    - (3) Calculer intérêt gagné au sein du compte dépôt (jusqu'à l'instant T)
+        - Utiliser l'intérêt annuelle dans la dernière configuration_compte_depot
+            - celle dans la date_application est la plus récente
+        - Arguments :
+            - idClient
+    - (10) Calculer solde réelle en compte dépôt (à l'instant T)
+        - solde AVEC INTERET compte dépôt (à l'instant T)
+        - somme de :
+            - (2) solde brute compte dépôt (à l'instant T) 
+            - (3) intérêt jusqu'à l'instant T
+        - Arguments :
+            - idClient
+    - (11) Créditer compte dépôt
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_dépôt
+    - (12) Débiter compte dépôt
+        - Arguments :
+            - idClient
+            - montant
+            - date_mouvement
+            - description
+            - id_type_mouvement_compte_dépôt
+        - Conditions : 
+            - respecter le nombre maximal de retrait par mois
+            - respecter le pourcentage max de retrait par rapport à la :
+                - (10) solde réelle en compte dépôt (à l'instant T)
+            - Utiliser l'intérêt annuelle dans la dernière configuration_compte_depot
+                - celle dans la date_application est la plus récente
+    - (15) Historique des mouvements du compte dépôt
+        - Arguments :
+            - idClient
+
+ClientService
+    - (13) Créer un nouveau client
+        - Arguments : 
+            - nom
+            - prenom
+            - date_naissance
+            - adresse
+            - email
+            - telephone
+        - Créer compte courant et compte depot
+    - (4) Calculer solde AVEC INTERET compte dépôt (à l'instant T)
+        - (10) Calculer solde réelle en compte dépôt (à l'instant T)
+        - Arguments :
+            - idClient
+    - (8) solde totale (simplifie)
+        - somme de :
+            - (1) solde brute compte courant
+            - (4) solde AVEC INTERET compte dépôt (à l'instant T)
+        - moins :
+            - (5) Calculer somme prêts
+        - Arguments :
+            - idClient
+
+PretService
+    - (5) Calculer somme prêts
+        - Arguments :
+            - idClient
+
+
+
+
+
+
+- (7) Débiter compte courant
+    - (1) Calcul solde brute compte courant
+

@@ -1,0 +1,260 @@
+Je n'ai pas utiliser IUtilisateurService.cs et UtilisateurService.cs puisque je n'en ai pas besoin pour l'instant.
+A présent, je souhaite transformer ce controller REST PretController de Jakarta EE en controller REST pour un projet ASP .NET
+Le Modèles utilisé sont : Pret
+Voici le DTO utilisé en requête : PretRequest
+Voici les DTO utilisés en réponse : ErrorResponse, PretResponse, SoldeResponse
+Et voici la structure actuelle du projet :
+D:.
+│   appsettings.Development.json
+│   appsettings.json
+│   banque-compte-pret.csproj
+│   banque-compte-pret.http
+│   banque-compte-pret.sln
+│   Program.cs
+│   
+├───.idea
+│   └───.idea.banque-compte-pret
+│       └───.idea
+│           │   .gitignore
+│           │   dataSources.local.xml
+│           │   dataSources.xml
+│           │   encodings.xml
+│           │   indexLayout.xml
+│           │   projectSettingsUpdater.xml
+│           │   vcs.xml
+│           │   workspace.xml
+│           │   
+│           └───dataSources
+│               │   80ca9244-e63a-4dfb-9fde-3c35fb4be3b5.xml
+│               │   
+│               └───80ca9244-e63a-4dfb-9fde-3c35fb4be3b5
+│                   └───storage_v2
+│                       └───_src_
+│                           └───database
+│                               │   banque_berthin.u6ztgQ.meta
+│                               │   
+│                               └───banque_berthin.u6ztgQ
+│                                   └───schema
+│                                           information_schema.FNRwLQ.meta
+│                                           pg_catalog.0S1ZNQ.meta
+│                                           public.abK9xQ.meta
+│
+├───bin
+│   └───Debug
+│       └───net9.0
+│           │   appsettings.Development.json
+│           │   appsettings.json
+│           │   banque-compte-pret.deps.json
+│           │   banque-compte-pret.dll
+│           │   banque-compte-pret.exe
+│           │   banque-compte-pret.pdb
+│           │   banque-compte-pret.runtimeconfig.json
+│           │   banque-compte-pret.staticwebassets.endpoints.json
+│           │   Humanizer.dll
+│           │   Microsoft.AspNetCore.OpenApi.dll
+│           │   Microsoft.Bcl.AsyncInterfaces.dll
+│           │   Microsoft.Build.Locator.dll
+│           │   Microsoft.CodeAnalysis.CSharp.dll
+│           │   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+│           │   Microsoft.CodeAnalysis.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+│           │   Microsoft.EntityFrameworkCore.Abstractions.dll
+│           │   Microsoft.EntityFrameworkCore.Design.dll
+│           │   Microsoft.EntityFrameworkCore.dll
+│           │   Microsoft.EntityFrameworkCore.Relational.dll
+│           │   Microsoft.Extensions.Caching.Abstractions.dll
+│           │   Microsoft.Extensions.Caching.Memory.dll
+│           │   Microsoft.Extensions.Configuration.Abstractions.dll
+│           │   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+│           │   Microsoft.Extensions.DependencyInjection.dll
+│           │   Microsoft.Extensions.DependencyModel.dll
+│           │   Microsoft.Extensions.Logging.Abstractions.dll
+│           │   Microsoft.Extensions.Logging.dll
+│           │   Microsoft.Extensions.Options.dll
+│           │   Microsoft.Extensions.Primitives.dll
+│           │   Microsoft.OpenApi.dll
+│           │   Mono.TextTemplating.dll
+│           │   Npgsql.dll
+│           │   Npgsql.EntityFrameworkCore.PostgreSQL.dll
+│           │   Swashbuckle.AspNetCore.Swagger.dll
+│           │   Swashbuckle.AspNetCore.SwaggerGen.dll
+│           │   Swashbuckle.AspNetCore.SwaggerUI.dll
+│           │   System.CodeDom.dll
+│           │   System.Composition.AttributedModel.dll
+│           │   System.Composition.Convention.dll
+│           │   System.Composition.Hosting.dll
+│           │   System.Composition.Runtime.dll
+│           │   System.Composition.TypedParts.dll
+│           │
+│           ├───cs
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───de
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───es
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───fr
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───it
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ja
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ko
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───pl
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───pt-BR
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ru
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───tr
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───zh-Hans
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           └───zh-Hant
+│                   Microsoft.CodeAnalysis.CSharp.resources.dll
+│                   Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│                   Microsoft.CodeAnalysis.resources.dll
+│                   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│                   Microsoft.CodeAnalysis.Workspaces.resources.dll
+│
+├───Controllers
+│       PretController.cs
+│
+├───Data
+│       BanqueBerthinContext.cs
+│
+├───Models
+│       ActionRole.cs
+│       Client.cs
+│       CompteCourant.cs
+│       CompteDepot.cs
+│       ConfigurationCompteDepot.cs
+│       Direction.cs
+│       HistoriqueStatutPret.cs
+│       MouvementCompteCourant.cs
+│       MouvementCompteDepot.cs
+│       Pret.cs
+│       RemboursementPret.cs
+│       StatutCompte.cs
+│       StatutPret.cs
+│       TypeMouvementCompteCourant.cs
+│       TypeMouvementCompteDepot.cs
+│       Utilisateur.cs
+│
+├───obj
+│   │   banque-compte-pret.csproj.EntityFrameworkCore.targets
+│   │   banque-compte-pret.csproj.nuget.dgspec.json
+│   │   banque-compte-pret.csproj.nuget.g.props
+│   │   banque-compte-pret.csproj.nuget.g.targets
+│   │   project.assets.json
+│   │   project.nuget.cache
+│   │   project.packagespec.json
+│   │   rider.project.model.nuget.info
+│   │   rider.project.restore.info
+│   │
+│   └───Debug
+│       └───net9.0
+│           │   .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+│           │   apphost.exe
+│           │   banque-c.00EAA6AB.Up2Date
+│           │   banque-compte-pret.AssemblyInfo.cs
+│           │   banque-compte-pret.AssemblyInfoInputs.cache
+│           │   banque-compte-pret.assets.cache
+│           │   banque-compte-pret.csproj.AssemblyReference.cache
+│           │   banque-compte-pret.csproj.CoreCompileInputs.cache
+│           │   banque-compte-pret.csproj.FileListAbsolute.txt
+│           │   banque-compte-pret.dll
+│           │   banque-compte-pret.GeneratedMSBuildEditorConfig.editorconfig
+│           │   banque-compte-pret.genruntimeconfig.cache
+│           │   banque-compte-pret.GlobalUsings.g.cs
+│           │   banque-compte-pret.MvcApplicationPartsAssemblyInfo.cache
+│           │   banque-compte-pret.MvcApplicationPartsAssemblyInfo.cs
+│           │   banque-compte-pret.pdb
+│           │   banque-compte-pret.sourcelink.json
+│           │   staticwebassets.build.endpoints.json
+│           │   staticwebassets.build.json
+│           │
+│           ├───ref
+│           │       banque-compte-pret.dll
+│           │
+│           ├───refint
+│           │       banque-compte-pret.dll
+│           │
+│           └───staticwebassets
+│                   msbuild.build.banque-compte-pret.props
+│                   msbuild.buildMultiTargeting.banque-compte-pret.props
+│                   msbuild.buildTransitive.banque-compte-pret.props
+│
+├───Properties
+│       launchSettings.json
+│
+└───Services
+    │   PretService.cs
+    │
+    └───IRepositories
+            IClientRepository.cs
+            IHistoriqueStatutPretRepository.cs
+            IPretRepository.cs
+            IStatutPretRepository.cs

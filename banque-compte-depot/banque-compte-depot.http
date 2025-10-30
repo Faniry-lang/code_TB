@@ -1,0 +1,6 @@
+@banque_compte_depot_HostAddress = http://localhost:5186
+
+GET {{banque_compte_depot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,27 @@
+Créer table :
+    - user
+        - id
+        - matricule
+        - password
+        - role (int)
+        - id_direction
+    - Direction
+        - id
+        - niveau
+        - libelle
+            - Compte courant
+            - Compte dépot
+            - Pret
+    - Action Role
+        - id
+        - role (int)
+        - action (VARCHAR)
+
+
+Rehefa milog ni olona, dia enregistrer en session ny listes ana : 
+    - direction
+    - role
+    - action role
+
+Pour la table mouvement, insert pour role 2 MINIMUM uniquement 
+    ==> insert : role >= 2

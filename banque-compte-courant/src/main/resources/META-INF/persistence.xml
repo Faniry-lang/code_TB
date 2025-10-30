@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+    <persistence-unit name="BankBerthin" transaction-type="JTA">
+        <jta-data-source>java:/BankBerthin</jta-data-source>
+        <class>com.management.courant.entity.ActionRole</class>
+        <class>com.management.courant.entity.Client</class>
+        <class>com.management.courant.entity.CompteCourant</class>
+        <class>com.management.courant.entity.CompteDepot</class>
+        <class>com.management.courant.entity.ConfigurationCompteDepot</class>
+        <class>com.management.courant.entity.Direction</class>
+        <class>com.management.courant.entity.HistoriqueStatutPret</class>
+        <class>com.management.courant.entity.MouvementCompteCourant</class>
+        <class>com.management.courant.entity.MouvementCompteDepot</class>
+        <class>com.management.courant.entity.Pret</class>
+        <class>com.management.courant.entity.RemboursementPret</class>
+        <class>com.management.courant.entity.StatutCompte</class>
+        <class>com.management.courant.entity.StatutPret</class>
+        <class>com.management.courant.entity.TypeMouvementCompteCourant</class>
+        <class>com.management.courant.entity.TypeMouvementCompteDepot</class>
+        <class>com.management.courant.entity.Utilisateur</class>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,7 @@
+Je souhaite créer le front de mon petit projet de banque avec Springboot avec Thymeleaf.
+A partir du fichier endpoints-JAVA.txt tu verras les différents endpoints de mon web service avec les arguments d'entrer et les réponses REST possibles.
+Créer les différents controlleurs associés à ces endpoints répondants aux besoins des informations dans le front-central.txt.
+Le fichier front-central.txt regroupe les différentes pages attendues durant ce projet.
+
+Dans CompteCourantController et CompteDepotController, ajoute l'Affichage de message de succès et d'erreur par rapport au résultat du endpoint ainsi que dans leur template respectif.
+endpoints-JAVA.txt contient toutes les informations des endpoints, tant en input qu'en output

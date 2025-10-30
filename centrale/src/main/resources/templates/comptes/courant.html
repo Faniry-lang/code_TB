@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte Courant - Banque</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Compte Courant - <span th:text="${client.nom + ' ' + client.prenom}">Client</span></h1>
+        <a th:href="@{/clients/{id}(id=${client.id})}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Retour au client
+        </a>
+    </div>
+
+    <!-- Messages de succès et d'erreur -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i>
+        <span th:text="${success}">Succès</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <span th:text="${error}">Erreur</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="row">
+        <!-- Solde brut -->
+        <div class="col-lg-4">
+            <div class="card border-left-primary shadow mb-4">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Solde Brut
+                        </div>
+                        <div class="h3 mb-0 font-weight-bold text-gray-800"
+                             th:text="${solde != null ? #numbers.formatDecimal(solde.solde, 1, 2) + ' €' : 'N/A'}">
+                            1200.50 €
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opérations -->
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Créditer -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-success">Créditer le compte</h6>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/comptes-courants/client/{idClient}/crediter(idClient=${client.id})}"
+                          method="post">
+                        <div class="mb-3">
+                            <label for="montantCredit" class="form-label">Montant (€)</label>
+                            <input type="number" step="0.01" class="form-control" id="montantCredit"
+                                   name="montant" min="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deviseCredit" class="form-label">Devise</label>
+                            <select class="form-control" id="deviseCredit" name="devise" required>
+                                <option value="ARI">Ariary</option>
+                                <option th:each="devise : ${devises}"
+                                        th:value="${devise.libelle}"
+                                        th:text="${devise.libelle}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionCredit" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionCredit"
+                                   name="description" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus-circle"></i> Créditer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <!-- Débiter -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-danger">Débiter le compte</h6>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/comptes-courants/client/{idClient}/debiter(idClient=${client.id})}"
+                          method="post">
+                        <div class="mb-3">
+                            <label for="montantDebit" class="form-label">Montant (€)</label>
+                            <input type="number" step="0.01" class="form-control" id="montantDebit"
+                                   name="montant" min="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deviseDebit" class="form-label">Devise</label>
+                            <select class="form-control" id="deviseDebit" name="devise" required>
+                                <option value="ARI">Ariary</option>
+                                <option th:each="devise : ${devises}"
+                                        th:value="${devise.libelle}"
+                                        th:text="${devise.libelle}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionDebit" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionDebit"
+                                   name="description" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-minus-circle"></i> Débiter
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historique des mouvements -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Historique des mouvements</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Montant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="mouvement : ${historique}">
+                                <td th:text="${mouvement.dateMouvement}">
+                                    27/09/2025 10:00
+                                </td>
+                                <td th:text="${mouvement.description}">Dépôt initial</td>
+                                <td>
+                                    <span th:if="${mouvement.typeMouvement != null && mouvement.typeMouvement.toLowerCase().contains('crédit')}"
+                                          class="badge bg-success text-dark" th:text="${mouvement.typeMouvement}">Crédit</span>
+                                    <span th:if="${mouvement.typeMouvement != null && mouvement.typeMouvement.toLowerCase().contains('débit')}"
+                                          class="badge bg-danger text-dark" th:text="${mouvement.typeMouvement}">Débit</span>
+                                    <span th:if="${mouvement.typeMouvement == null || (!mouvement.typeMouvement.toLowerCase().contains('crédit') && !mouvement.typeMouvement.toLowerCase().contains('débit'))}"
+                                          class="badge bg-secondary text-dark" th:text="${mouvement.typeMouvement != null ? mouvement.typeMouvement : 'N/A'}">Autre</span>
+                                </td>
+                                <td th:class="${mouvement.typeMouvement != null && mouvement.typeMouvement.toLowerCase().contains('crédit')} ? 'text-success' : 'text-danger'"
+                                    th:text="${(mouvement.typeMouvement != null && mouvement.typeMouvement.toLowerCase().contains('crédit')) ?
+                                    ('+ ' + #numbers.formatDecimal(mouvement.montant, 1, 2) + ' €') :
+                                    ('- ' + #numbers.formatDecimal(mouvement.montant, 1, 2) + ' €')}">
+                                    + 100.00 €
+                                </td>
+                            </tr>
+                            <tr th:if="${historique.isEmpty()}">
+                                <td colspan="4" class="text-center">Aucun mouvement trouvé</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}">Erreur</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+</body>
+</html>

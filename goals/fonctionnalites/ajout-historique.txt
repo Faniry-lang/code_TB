@@ -1,0 +1,5 @@
+Dans CompteCourantController, ajoute un endpoint permettant d'obtenir l'Historique des mouvements
+du compte courant à l'aide de CompteCourantService. Je t'ai mis à disposition les fichiers relatifs à cela.
+
+Fais la même chose pour CompteDepotController : Dans CompteCourantController, ajoute un endpoint permettant d'obtenir l'Historique des mouvements
+du compte dépôt à l'aide de CompteDepotService. Je t'ai mis à disposition les fichiers relatifs à cela.

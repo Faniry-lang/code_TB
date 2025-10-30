@@ -1,0 +1,24 @@
+A présent, crée moi cette logique métier ClientService et les fonctions que je vais te donner ci-dessous à partir des fichier en pièce jointes : 
+ClientService
+    - (13) Créer un nouveau client
+        - Arguments : 
+            - nom
+            - prenom
+            - date_naissance
+            - adresse
+            - email
+            - telephone
+        - Créer compte courant et compte depot
+    - (4) Calculer solde AVEC INTERET compte dépôt (à l'instant T)
+        - (10) Calculer solde réelle en compte dépôt (à l'instant T)
+        - Arguments :
+            - idClient
+    - (8) solde totale (simplifie)
+        - somme de :
+            - (1) solde brute compte courant
+            - (4) solde AVEC INTERET compte dépôt (à l'instant T)
+        - moins :
+            - (5) Calculer somme prêts
+        - Arguments :
+            - idClient
+Je t'ai aussi donné les services que je t'ai demandé avec quelques modifications

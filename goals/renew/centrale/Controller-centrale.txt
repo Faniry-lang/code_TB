@@ -1,0 +1,101 @@
+Je souhaite trransformer ce controller UtilisateurController de spring boot en utilisant mon EJB distant en tant qu'EJB remote.
+Les formes de DTO utilisé par les endpoints sont : ErrorResponse, LoginResponse, SuccessResponse, Utilisateur (entité JPA)
+Voici la page de login utilisé : login.html
+Voici le EJB remote que tu devras utiliser : UtilisateurRemote avec l'aide de UtilisateurSessionManager, étant donnée que tu devras enregistrer UtilisateurRemote en session HttpSession puisque UtilisateurRemote est stateful
+Les données sauvegardées dans le EJB Stateful UtilisateurRemote sont dans UtilisateurService
+Voici la structure de mon projet : D:.
+│   .gitattributes
+│   .gitignore
+│   mvnw
+│   mvnw.cmd
+│   pom.xml
+│
+├───.idea
+│       compiler.xml
+│       encodings.xml
+│       jarRepositories.xml
+│       misc.xml
+│       vcs.xml
+│       workspace.xml
+│
+├───.mvn
+│   └───wrapper
+│           maven-wrapper.properties
+│
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───banque
+│   │   │           └───centrale
+│   │   │               │   CentraleApplication.java
+│   │   │               │
+│   │   │               ├───config
+│   │   │               │       AppConfig.java
+│   │   │               │       EJBConfig.java
+│   │   │               │
+│   │   │               ├───controllers
+│   │   │               │       HomeController.java
+│   │   │               │       UtilisateurController.java
+│   │   │               │
+│   │   │               └───services
+│   │   │                   └───ejb
+│   │   │                           UtilisateurSessionManager.java
+│   │   │
+│   │   └───resources
+│   │       │   application.properties
+│   │       │
+│   │       ├───static
+│   │       └───templates
+│   │           │   dashboard.html
+│   │           │   login.html
+│   │           │
+│   │           ├───clients
+│   │           │       detail.html
+│   │           │       formulaire.html
+│   │           │       liste.html
+│   │           │
+│   │           ├───comptes
+│   │           │       courant.html
+│   │           │       depot.html
+│   │           │
+│   │           ├───layouts
+│   │           │       admin-layout.html
+│   │           │
+│   │           └───prets
+│   │                   gestion.html
+│   │                   nouveau-pret.html
+│   │
+│   └───test
+│       └───java
+│           └───com
+│               └───banque
+│                   └───centrale
+│                           CentraleApplicationTests.java
+│
+└───target
+    ├───classes
+    │   │   application.properties
+    │   │
+    │   └───com
+    │       └───banque
+    │           └───centrale
+    │               │   CentraleApplication.class
+    │               │
+    │               ├───config
+    │               │       EJBConfig.class
+    │               │
+    │               ├───controllers
+    │               └───services
+    │                   └───ejb
+    │                           UtilisateurSessionManager.class
+    │
+    ├───generated-sources
+    │   └───annotations
+    ├───generated-test-sources
+    │   └───test-annotations
+    └───test-classes
+        └───com
+            └───banque
+                └───centrale
+                        CentraleApplicationTests.class

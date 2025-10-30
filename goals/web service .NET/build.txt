@@ -1,0 +1,255 @@
+dotnet ef dbcontext scaffold "Host=localhost;Database=banque_berthin;Username=postgres;Password=berthin" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models --context-dir Data --context BanqueDbContext --force
+
+Lorsque je fais dans le cmd : 
+    dotnet ef dbcontext scaffold "Host=localhost;Database=banque_berthin;Username=postgres;Password=berthin" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models --context-dir Data --context BanqueDbContext --force
+ 
+J'ai cette erreur :
+    Could not execute because the specified command or file was not found.
+    Possible reasons for this include:
+    * You misspelled a built-in dotnet command.
+    * You intended to execute a .NET program, but dotnet-ef does not exist.
+    * You intended to run a global tool, but a dotnet-prefixed executable with this name could not be found on the PATH.
+
+Lorsque je refais dans le cmd : 
+    dotnet ef dbcontext scaffold "Host=localhost;Database=banque_berthin;Username=postgres;Password=berthin" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models --context-dir Data --context BanqueDbContext --force
+ 
+Build started...
+Build succeeded.
+System.TypeLoadException: Method 'get_LockReleaseBehavior' in type 'Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlHistoryRepository' from assembly 'Npgsql.EntityFrameworkCore.PostgreSQL, Version=8.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7' does not have an implementation.
+   at Microsoft.Extensions.DependencyInjection.NpgsqlServiceCollectionExtensions.AddEntityFrameworkNpgsql(IServiceCollection serviceCollection)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal.NpgsqlDesignTimeServices.ConfigureDesignTimeServices(IServiceCollection serviceCollection)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DesignTimeServicesBuilder.ConfigureDesignTimeServices(Type designTimeServicesType, IServiceCollection services)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DesignTimeServicesBuilder.ConfigureProviderServices(String provider, IServiceCollection services, Boolean throwOnError)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DesignTimeServicesBuilder.CreateServiceCollection(String provider)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DesignTimeServicesBuilder.Build(String provider)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DatabaseOperations.ScaffoldContext(String provider, String connectionString, String outputDir, String outputContextDir, String dbContextClassName, IEnumerable`1 schemas, IEnumerable`1 tables, String modelNamespace, String contextNamespace, Boolean useDataAnnotations, Boolean overwriteFiles, Boolean useDatabaseNames, Boolean suppressOnConfiguring, Boolean noPluralize)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.ScaffoldContextImpl(String provider, String connectionString, String outputDir, String outputDbContextDir, String dbContextClassName, IEnumerable`1 schemaFilters, IEnumerable`1 tableFilters, String modelNamespace, String contextNamespace, Boolean useDataAnnotations, Boolean overwriteFiles, Boolean useDatabaseNames, Boolean suppressOnConfiguring, Boolean noPluralize)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.ScaffoldContext.<>c__DisplayClass0_0.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.<>c__DisplayClass3_0`1.<Execute>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+Method 'get_LockReleaseBehavior' in type 'Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlHistoryRepository' from assembly 'Npgsql.EntityFrameworkCore.PostgreSQL, Version=8.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7' does not have an implementation.
+
+
+Crée les DTOs nécessaires pour le projet de gestion prêt et implémente le mapping entre les entités et les DTOs (Controlleur). Gére les erreurs et les validations.
+Tu trouveras ci joint toutes les entités, à toi de trouver celles qui sont nécessaires. Il y'a aussi le DBContext ci joint.
+Voici la structure du projet : 
+
+    D:.
+│   appsettings.Development.json
+│   appsettings.json
+│   pret-management.csproj
+│   pret-management.http
+│   pret-management.sln
+│   Program.cs
+│
+├───.idea
+│   └───.idea.pret-management
+│       └───.idea
+│               .gitignore
+│               encodings.xml
+│               indexLayout.xml
+│               projectSettingsUpdater.xml
+│               vcs.xml
+│               workspace.xml
+│
+├───bin
+│   └───Debug
+│       └───net9.0
+│           │   appsettings.Development.json
+│           │   appsettings.json
+│           │   Humanizer.dll
+│           │   Microsoft.AspNetCore.OpenApi.dll
+│           │   Microsoft.Bcl.AsyncInterfaces.dll
+│           │   Microsoft.Build.Locator.dll
+│           │   Microsoft.CodeAnalysis.CSharp.dll
+│           │   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+│           │   Microsoft.CodeAnalysis.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+│           │   Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+│           │   Microsoft.EntityFrameworkCore.Abstractions.dll
+│           │   Microsoft.EntityFrameworkCore.Design.dll
+│           │   Microsoft.EntityFrameworkCore.dll
+│           │   Microsoft.EntityFrameworkCore.Relational.dll
+│           │   Microsoft.Extensions.Caching.Abstractions.dll
+│           │   Microsoft.Extensions.Caching.Memory.dll
+│           │   Microsoft.Extensions.Configuration.Abstractions.dll
+│           │   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+│           │   Microsoft.Extensions.DependencyInjection.dll
+│           │   Microsoft.Extensions.DependencyModel.dll
+│           │   Microsoft.Extensions.Logging.Abstractions.dll
+│           │   Microsoft.Extensions.Logging.dll
+│           │   Microsoft.Extensions.Options.dll
+│           │   Microsoft.Extensions.Primitives.dll
+│           │   Microsoft.OpenApi.dll
+│           │   Mono.TextTemplating.dll
+│           │   Npgsql.dll
+│           │   Npgsql.EntityFrameworkCore.PostgreSQL.dll
+│           │   pret-management.deps.json
+│           │   pret-management.dll
+│           │   pret-management.exe
+│           │   pret-management.pdb
+│           │   pret-management.runtimeconfig.json
+│           │   pret-management.staticwebassets.endpoints.json
+│           │   System.CodeDom.dll
+│           │   System.Composition.AttributedModel.dll
+│           │   System.Composition.Convention.dll
+│           │   System.Composition.Hosting.dll
+│           │   System.Composition.Runtime.dll
+│           │   System.Composition.TypedParts.dll
+│           │
+│           ├───cs
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───de
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───es
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───fr
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───it
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ja
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ko
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───pl
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───pt-BR
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───ru
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───tr
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           ├───zh-Hans
+│           │       Microsoft.CodeAnalysis.CSharp.resources.dll
+│           │       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│           │       Microsoft.CodeAnalysis.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│           │       Microsoft.CodeAnalysis.Workspaces.resources.dll
+│           │
+│           └───zh-Hant
+│                   Microsoft.CodeAnalysis.CSharp.resources.dll
+│                   Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+│                   Microsoft.CodeAnalysis.resources.dll
+│                   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+│                   Microsoft.CodeAnalysis.Workspaces.resources.dll
+│
+├───Data
+│       BanqueDbContext.cs
+│
+├───Models
+│       Client.cs
+│       CompteCourant.cs
+│       CompteDepot.cs
+│       ConfigurationCompteDepot.cs
+│       HistoriqueStatutPret.cs
+│       MouvementCompteCourant.cs
+│       MouvementCompteDepot.cs
+│       Pret.cs
+│       RemboursementPret.cs
+│       StatutCompte.cs
+│       StatutPret.cs
+│       TypeMouvementCompteCourant.cs
+│       TypeMouvementCompteDepot.cs
+│
+├───obj
+│   │   pret-management.csproj.EntityFrameworkCore.targets
+│   │   pret-management.csproj.nuget.dgspec.json
+│   │   pret-management.csproj.nuget.g.props
+│   │   pret-management.csproj.nuget.g.targets
+│   │   project.assets.json
+│   │   project.nuget.cache
+│   │   project.packagespec.json
+│   │   rider.project.model.nuget.info
+│   │   rider.project.restore.info
+│   │
+│   └───Debug
+│       └───net9.0
+│           │   .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+│           │   apphost.exe
+│           │   pret-man.E387D2FF.Up2Date
+│           │   pret-management.AssemblyInfo.cs
+│           │   pret-management.AssemblyInfoInputs.cache
+│           │   pret-management.assets.cache
+│           │   pret-management.csproj.AssemblyReference.cache
+│           │   pret-management.csproj.CoreCompileInputs.cache
+│           │   pret-management.csproj.FileListAbsolute.txt
+│           │   pret-management.dll
+│           │   pret-management.GeneratedMSBuildEditorConfig.editorconfig
+│           │   pret-management.genruntimeconfig.cache
+│           │   pret-management.GlobalUsings.g.cs
+│           │   pret-management.MvcApplicationPartsAssemblyInfo.cache
+│           │   pret-management.MvcApplicationPartsAssemblyInfo.cs
+│           │   pret-management.pdb
+│           │   pret-management.sourcelink.json
+│           │   staticwebassets.build.endpoints.json
+│           │   staticwebassets.build.json
+│           │
+│           ├───ref
+│           │       pret-management.dll
+│           │
+│           ├───refint
+│           │       pret-management.dll
+│           │
+│           └───staticwebassets
+│                   msbuild.build.pret-management.props
+│                   msbuild.buildMultiTargeting.pret-management.props
+│                   msbuild.buildTransitive.pret-management.props
+│
+└───Properties
+        launchSettings.json

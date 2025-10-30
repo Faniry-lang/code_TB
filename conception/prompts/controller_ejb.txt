@@ -1,0 +1,11 @@
+A présent, je souhaite créer les controller REST en rapport avec ces 4 services :
+    - CompteCourantService --> CompteCourantController
+            
+    - CompteDepotService --> CompteDepotController
+
+    - ClientService --> ClientController
+
+    - PretService --> PretController
+
+Dans ClientController, ajoute les fonctions de base permettant d'obtenir tous les clients et toutes les fonctionnalités simples et de base associées.
+

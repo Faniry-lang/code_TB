@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>Nouveau Prêt - Banque</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nouveau Prêt - <span th:text="${client.nom + ' ' + client.prenom}">Client</span></h1>
+    <a th:href="@{/prets/client/{id}(id=${client.id})}" class="btn btn-secondary btn-sm">
+      <i class="fas fa-arrow-left"></i> Retour aux prêts
+    </a>
+  </div>
+
+  <!-- Formulaire de création de prêt -->
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Créer un nouveau prêt</h6>
+        </div>
+        <div class="card-body">
+          <!-- Formulaire utilisant @RequestParam -->
+          <form th:action="@{/prets/creer}" method="post">
+            <input type="hidden" name="idClient" th:value="${client.id}">
+
+            <div class="form-group">
+              <label for="montantPret">Montant du prêt (€)</label>
+              <input type="number" step="0.01" min="0" class="form-control"
+                     id="montantPret" name="montantPret" required
+                     placeholder="Entrez le montant du prêt">
+            </div>
+
+            <div class="form-group">
+              <label for="tauxInteretAnnuel">Taux d'intérêt annuel (%)</label>
+              <input type="number" step="0.01" min="0" class="form-control"
+                     id="tauxInteretAnnuel" name="tauxInteretAnnuel" required
+                     placeholder="Ex: 5.5 pour 5.5%">
+            </div>
+
+            <div class="form-group">
+              <label for="periodiciteRemboursement">Périodicité de remboursement (mois)</label>
+              <input type="number" min="1" class="form-control"
+                     id="periodiciteRemboursement" name="periodiciteRemboursement" required
+                     placeholder="Ex: 12 pour 12 mois">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-plus"></i> Créer le prêt
+            </button>
+
+            <a th:href="@{/prets/client/{id}(id=${client.id})}" class="btn btn-secondary">
+              Annuler
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informations -->
+    <div class="col-lg-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Informations</h6>
+        </div>
+        <div class="card-body">
+          <p><strong>Client:</strong> <span th:text="${client.nom + ' ' + client.prenom}"></span></p>
+          <p><strong>ID Client:</strong> <span th:text="${client.id}"></span></p>
+          <p><strong>Matricule:</strong> <span th:text="${client.matricule}"></span></p>
+
+          <div class="alert alert-info mt-3">
+            <i class="fas fa-info-circle"></i>
+            <strong>Note:</strong> La date de création sera automatiquement définie à la date actuelle.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

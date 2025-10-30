@@ -1,0 +1,8 @@
+Crée les pages à partir de ces controlleurs ainsi que les pages attendues dans front-central.txt
+Utilise Bootstrap 5 comme sur ces templates : 
+    - tables.html
+    - buttons.html
+    - cards.html
+    - utilities-border.html
+    - home.html
+Toutes les pages que tu vas créer seront associés au layout admin-layout.html comme les templates que je t'ai donnés.

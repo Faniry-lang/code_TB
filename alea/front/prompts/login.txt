@@ -1,0 +1,4 @@
+En utilisant endpoints-JAVA.txt (avec les endpoints qu'on vient de créer):
+Côté serveur front maintenant, Crée UtilisateurController et la page de login qui va ensuite redirigé vers @RequestMapping("/dashboard") de DashboardController.
+Regarde DashboardController pour constater la structure du controller.
+Ensuite, crée moi la page login en thymeleaf avec bootstrap 5, tu trouveras ci joint un exemple de page.

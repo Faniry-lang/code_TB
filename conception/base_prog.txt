@@ -1,0 +1,72 @@
+CREATE TABLE utilisateur(
+   id INTEGER,
+   nom VARCHAR(50)  NOT NULL,
+   password VARCHAR(50)  NOT NULL,
+   is_actif BOOLEAN NOT NULL,
+   numero INTEGER NOT NULL,
+   PRIMARY KEY(id),
+   UNIQUE(numero)
+);
+
+CREATE TABLE type_mouvement(
+   id INTEGER,
+   libelle VARCHAR(15)  NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE type_pret(
+   id INTEGER,
+   libelle VARCHAR(50)  NOT NULL,
+   nb_mois_remboursement INTEGER NOT NULL,
+   interet NUMERIC(15,2)   NOT NULL,
+   montant MONEY NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE retour_pret(
+   id INTEGER,
+   date_retour DATE NOT NULL,
+   montant NUMERIC(15,2)   NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE compte_depot(
+   id INTEGER,
+   date_depot DATE NOT NULL,
+   montant NUMERIC(15,2)   NOT NULL,
+   id_1 INTEGER NOT NULL,
+   id_2 INTEGER NOT NULL,
+   PRIMARY KEY(id),
+   FOREIGN KEY(id_1) REFERENCES type_mouvement(id),
+   FOREIGN KEY(id_2) REFERENCES utilisateur(id)
+);
+
+CREATE TABLE parametre(
+   id VARCHAR(50) ,
+   interet_depot NUMERIC(15,2)   NOT NULL,
+   retrait_depot_mois INTEGER NOT NULL,
+   plafond_retrait_depot NUMERIC(15,2)   NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE mouvement_compte_courant(
+   id INTEGER,
+   date_mouvement TIMESTAMP NOT NULL,
+   montant MONEY NOT NULL,
+   id_1 INTEGER NOT NULL,
+   id_2 INTEGER NOT NULL,
+   PRIMARY KEY(id),
+   FOREIGN KEY(id_1) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_2) REFERENCES type_mouvement(id)
+);
+
+CREATE TABLE historique_pret(
+   id INTEGER,
+   id_1 INTEGER,
+   id_2 INTEGER,
+   date_pret DATE NOT NULL,
+   PRIMARY KEY(id, id_1, id_2),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES type_pret(id),
+   FOREIGN KEY(id_2) REFERENCES retour_pret(id)
+);
